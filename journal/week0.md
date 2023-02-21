@@ -10,8 +10,8 @@ Below is a link to the Recreated Conceptual Diagram in Lucid Chart and also a sc
 
 ### Create a Billing Alarm
 I created a Billing alarm called DailyEstimatedCharges shown in the diagram below
-[Image of the Billing alarm](assets/alarm.png)
+![Image of the Billing alarm](assets/alarm.png)
 
 ### Create a Budget Alarm
 I created my own Budget for $1.00 shown in the diagram below
-[Image of the Billing alarm](assets/budgets.png)
+![Image of the Billing alarm](assets/budgets.png)
