@@ -2,6 +2,10 @@
 
 ## Required Homework 
 
+### Use cloudshell
+Below is an image showing use of cloudshell
+[Image of the Recreated Diagram](assets/cloudshell-prooof.png)
+
 ### Recreate Conceptual Diagram in Lucid Charts
 Below is a link to the Recreated Conceptual Diagram in Lucid Chart and also a screenshot showing the diagram
 ```
