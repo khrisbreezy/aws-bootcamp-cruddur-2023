@@ -8,9 +8,9 @@ Below is an image showing use of cloudshell
 
 ### Recreate Conceptual Diagram in Lucid Charts
 Below is a link to the Recreated Conceptual Diagram in Lucid Chart and also a screenshot showing the diagram
-```
-Conceptual Diagram Link https://lucid.app/lucidchart/65372dfa-7538-4080-85f5-8d924e87cd89/edit?viewport_loc=-1656%2C-549%2C2811%2C1594%2C0_0&invitationId=inv_9376873f-34fc-439f-a1ff-f386cbc56f0b)
-```
+
+[Conceptual Diagram Link] (https://lucid.app/lucidchart/65372dfa-7538-4080-85f5-8d924e87cd89/edit?viewport_loc=-1656%2C-549%2C2811%2C1594%2C0_0&invitationId=inv_9376873f-34fc-439f-a1ff-f386cbc56f0b))
+
 ![Cruddur Logical Diagram](assets/lucid-chart.png)
 
 ### Create a Billing Alarm
