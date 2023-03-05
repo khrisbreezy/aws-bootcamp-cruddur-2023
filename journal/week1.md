@@ -55,8 +55,10 @@ Always check your billing, to know how mnay hours you have left
 - Covered under free tier if you use the T2.micro instance'
 - Avoid using Cloud9 in case of free tier instance in use for other purpose.
 
+
+
 ### Creating docker backend
-To create the docker configuration for the backend-flask, create a file called **Dockerfile** and copy the following code
+To create the docker configuration for the backend-flask, create a **Dockerfile** and copy the following code
 
 ```
 FROM python:3.10-slim-buster
@@ -90,3 +92,47 @@ this code create the 2 var env and run the container
 ```
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 ```
+
+#### Creating docker frontend
+cd into the frontend folder and install npm(node packages)
+this command will be execute every time you launch the gitpod session
+```
+cd frontend-react-js
+npm i
+```
+
+To create the docker configuration for the frontend-react-js, create a **Dockerfile** and copy the following code
+```
+FROM node:16.18
+
+ENV PORT=3000
+
+COPY . /frontend-react-js
+WORKDIR /frontend-react-js
+RUN npm install
+EXPOSE ${PORT}
+CMD ["npm", "start"]
+```
+#### Create docker compose
+
+Create the file called docker-compose.yml from the main root and copy the following code.
+```
+version: "3.8"
+services:
+  backend-flask:
+    environment:
+      FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+      BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+    build: ./backend-flask
+    ports:
+      - "4567:4567"
+    volumes:
+      - ./backend-flask:/backend-flask
+  frontend-react-js:
+    environment:
+      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+    build: ./frontend-react-js
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend-react-js:/frontend-react-js
