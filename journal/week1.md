@@ -54,3 +54,39 @@ Always check your billing, to know how mnay hours you have left
 ### AWS Cloud9
 - Covered under free tier if you use the T2.micro instance'
 - Avoid using Cloud9 in case of free tier instance in use for other purpose.
+
+### Creating docker backend
+To create the docker configuration for the backend-flask, create a file called **Dockerfile** and copy the following code
+
+```
+FROM python:3.10-slim-buster
+
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+```
+
+from the project directory type the following code to build the image
+```
+docker build -t backend-flask ./backend-flask
+```
+
+typing this command to run the image of the container
+```
+docker run --rm -p 4567:4567 -it backend-flask
+```
+
+
+this code create the 2 var env and run the container
+
+```
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+```
