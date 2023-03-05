@@ -136,3 +136,10 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
+      
+      
+  ````
+
+### Write a React Page for Notifications
+
+I created a componnent for the Notifications page copying th code for th Hompage(js and css), and also created a corresponding API.
