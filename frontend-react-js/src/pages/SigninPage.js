@@ -12,6 +12,7 @@ export default function SigninPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   // const onsubmit = async (event) => {
   //   event.preventDefault();
@@ -28,19 +29,23 @@ export default function SigninPage() {
   const onsubmit = async (event) => {
     setErrors('')
     event.preventDefault();
+    setLoading(true);
     try {
-      Auth.signIn(username, password)
+      Auth.signIn(email, password)
         .then(user => {
           localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+          setLoading(false);
           window.location.href = "/"
         })
-        .catch(err => { console.log('Error!', err) });
-    } catch (error) {
-      if (error.code == 'UserNotConfirmedException') {
-        window.location.href = "/confirm"
-      }
-      setErrors(error.message)
-    }
+        .catch(err => { 
+          setLoading(false);
+          if (err.code == 'UserNotConfirmedException') {
+            window.location.href = "/confirm"
+          }
+          setErrors(err.message)
+          console.log('Error!', err) 
+        });
+    } catch (error) {}
     return false
   }
 
@@ -88,7 +93,7 @@ export default function SigninPage() {
           {el_errors}
           <div className='submit'>
             <Link to="/forgot" className="forgot-link">Forgot Password?</Link>
-            <button type='submit'>Sign In</button>
+            <button disabled={loading} type='submit'>{loading ? 'Sign in...' : 'Sign In'}</button>
           </div>
 
         </form>
