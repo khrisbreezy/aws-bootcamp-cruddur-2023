@@ -1,6 +1,6 @@
 import './ConfirmationPage.css';
 import React from "react";
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Auth } from 'aws-amplify';
 
@@ -13,7 +13,11 @@ export default function ConfirmationPage() {
   const [errors, setErrors] = React.useState('');
   const [codeSent, setCodeSent] = React.useState(false);
 
+  
   const params = useParams();
+
+  const queryParams = new URLSearchParams(window.location.search)
+  const verifiedEmail = queryParams.get("email");
 
   const code_onchange = (event) => {
     setCode(event.target.value);
@@ -92,8 +96,8 @@ export default function ConfirmationPage() {
   }
 
   React.useEffect(()=>{
-    if (params.email) {
-      setEmail(params.email)
+    if (verifiedEmail) {
+      setEmail(verifiedEmail)
     }
   }, [])
 
@@ -115,6 +119,7 @@ export default function ConfirmationPage() {
                 type="text"
                 value={email}
                 onChange={email_onchange} 
+                defaultValue={email}
               />
             </div>
             <div className='field text_field code'>
