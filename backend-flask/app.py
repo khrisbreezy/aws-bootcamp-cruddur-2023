@@ -14,7 +14,7 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
-from lib.cognito_token_verification import CognitoTokenVerificationService
+from lib.cognito_token_verification import CognitoTokenVerificationService, extract_access_token, TokenVerifyError
 
 #XRAY ----------
 from aws_xray_sdk.core import xray_recorder
@@ -148,12 +148,24 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
+  access_token = extract_access_token(request.headers)
+  try:
+    claims = cognito_token_verification.verify(access_token)
+    app.logger.info( claims)
+    app.logger.info('claims')
+    data = HomeActivities.run(logger=LOGGER, cognito_userId=claims['username'])
+    # self.claims = self.token_service.claims
+    # g.cognito_claims = self.claims
+  except TokenVerifyError as e:
+    _ = request.data
+    app.logger.info('unauthenticated')
+    data = HomeActivities.run(logger=LOGGER)
+  return data, 200
+    
   # app.logger.info(
   #   request.headers.get('Authorization')
   # )
 
-  data = HomeActivities.run(logger=LOGGER)
-  return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
 def data_notifications():
