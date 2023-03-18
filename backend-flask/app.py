@@ -14,6 +14,8 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+from lib.cognito_token_verification import CognitoTokenVerificationService
+
 #XRAY ----------
 from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
@@ -47,6 +49,10 @@ tracer = trace.get_tracer(__name__)
 app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
+
+cognito_token_verification = CognitoTokenVerificationService(
+  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"), user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"), region=os.getenv("AWS_DEFAULT_REGION")
+)
 
 # XRAY Initaialize ------
 xray_url = os.getenv("AWS_XRAY_URL")
